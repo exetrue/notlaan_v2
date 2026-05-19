@@ -1,0 +1,8 @@
+{
+  "name": "NOTLAAN",
+  "description": "Gizliliğe önem veren, AI destekli profesyonel not defteri. PIN korumalı kasa, otomatik yedekleme ve akıllı içerik düzenleme ile tüm notlarınız, şifreleriniz ve hatırlatıcılarınız güvende. (Eski adıyla Sırdaş Not)",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

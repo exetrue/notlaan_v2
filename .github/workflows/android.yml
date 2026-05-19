@@ -1,0 +1,64 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: |
+          npm install --include=optional
+          # Tailwind v4 native binding fix: Bazı ortamlarda opsiyonel bağımlılıklar otomatik yüklenmiyor
+          if [ ! -d "node_modules/@tailwindcss/oxide-linux-x64-gnu" ]; then
+            echo "Installing missing Tailwind native binding..."
+            npm install @tailwindcss/oxide-linux-x64-gnu
+          fi
+
+      - name: Build Web App
+        run: npm run build
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.2.1
+          wrapper-validation-enabled: false
+          dependency-graph: disabled
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          log-accepted-android-sdk-licenses: false
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build Android APK
+        run: |
+          cd android
+          gradle assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: android/app/build/outputs/apk/debug/*.apk

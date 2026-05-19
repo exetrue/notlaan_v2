@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-bg: var(--bg-color, #0d0d1a);
+  --color-surface: var(--surface-color, #16162a);
+  --color-card: var(--card-color, #1e1e38);
+  --color-accent: #6366f1;
+  --color-accent-soft: rgba(99, 102, 241, 0.1);
+  --color-text-muted: var(--text-muted-color, #8888aa);
+  --color-border: var(--border-color, #2a2a4a);
+  --color-text-main: var(--text-main, #f8f9fa);
+}
+
+@layer base {
+  :root {
+    --bg-color: #ffffff;
+    --surface-color: #f8fafc;
+    --card-color: #ffffff;
+    --text-muted-color: #64748b;
+    --border-color: #e2e8f0;
+    --text-main: #0f172a;
+    --accent-color: #10b981;
+  }
+
+  :root.dark {
+    --bg-color: #020617;
+    --surface-color: #0f172a;
+    --card-color: #1e293b;
+    --text-muted-color: #94a3b8;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --accent-color: #10b981;
+  }
+
+  body {
+    @apply bg-bg text-text-main font-sans antialiased transition-colors duration-300;
+  }
+}
+
+.markdown-body {
+  @apply text-sm leading-relaxed;
+}
+
+/* V2 accessibility mode: larger, calmer, elderly-user friendly UI */
+.elderly-mode {
+  font-size: 18px;
+}
+.elderly-mode button,
+.elderly-mode input,
+.elderly-mode textarea {
+  min-height: 48px;
+}
+.elderly-mode .text-xs { font-size: 0.9rem; }
+.elderly-mode .text-sm { font-size: 1rem; }
